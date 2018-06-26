@@ -2,20 +2,24 @@ console.log("Starting app.js");
 
 const fs = require("fs");
 const _ = require("lodash");
-
+const yargs = require("yargs");
 const notes = require("./notes.js");
 
-var command = process.argv[2];
+const argv = yargs.argv; //is were the yargs library stores it's version of argv
+
+var command = argv._[0];
 console.log("Command: ",command);
+// console.log("Process: ", process.argv);
+console.log("Yarg: ", argv);
 //commands to be ran in the command prompt node app.js ${command} --argument="value"
 if (command === "add"){
-	console.log("Adding new note");
+	notes.addNote(argv.title, argv.body);
 } else if (command === "list") {
-	console.log("Listing all notes");
+	notes.getAll();
 } else if (command === "read"){
-	console.log("Fetching note");
+	notes.readNote(argv.title);
 } else if (command === "remove"){
-	console.log("removing note");
+	notes.removeNote(argv.title);
 } else {
 	console.log("Command not recognized");
 }
